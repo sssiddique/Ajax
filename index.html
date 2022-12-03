@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax Test</title>
+</head>
+<body>
+  <div>
+    <h1>This is example one</h1>
+    <p id="demo">Here We load data</p>
+    <button onclick="loadData()">Click To Load</button>
+  </div>
+  <div>
+    <h1>This is example two</h1>
+    <p id="demo-api">Here We load data from API To console</p>
+    <button onclick="loadData2()">Click To Load</button>
+  </div>
+  <script>
+    /*
+    Server Requests  (readyState)-
+      0 - Request not initialized
+      1 - Server connection established
+      2 - Request Received
+      3 - Processing Request
+      4 - Request finished and response is ready
+
+      Server Status / HTTP Status Code -
+      Status:
+      200 - Ok
+      403 - Forbidden
+      404 - Not Found
+
+      Response Text / XML / JSON
+    */
+
+    /*  
+        // Basic Syntax -
+        var xhttp = new XMLHttpRequest();
+
+        // This function will perform it's inside's code until it's status is true
+        xhttp.onreadystatechange = function(){
+
+            // To check the server state & status
+            if(this.readyState == 4 && this.status == 200){
+              // If the above status and state is true then the following code will execute.
+              document.getElementById("demo").innerHTML = this.responseText;
+            }
+
+        }
+        xhttp.open("GET", "next.txt", true); // parameters are, first one is the method, second one is File path, and third one is async mode true/false
+        xhttp.send();
+    */
+
+  //  Example # 01
+      function loadData(){
+          var xhttp = new XMLHttpRequest();
+
+          xhttp.onreadystatechange = function(){
+
+              if(this.readyState == 4 && this.status == 200){
+                document.getElementById("demo").innerHTML = this.responseText;
+              }else if(this.readyState == 4 && this.status == 404){
+                document.getElementById("demo").innerHTML = "File Not Found";
+              }
+
+          }
+          xhttp.open("GET", "next.txt", true); 
+          xhttp.send();
+      }
+
+/* ==================================================================================  */
+
+      //  Example # 02
+      function loadData2(){
+          var xhttp = new XMLHttpRequest();
+
+          xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+              console.log(this.responseText);
+            }else if(this.readyState == 4 && this.status == 200){
+              console.log("No Data found");
+            }
+          }
+      
+          xhttp.open('GET', 'https://jsonplaceholder.typicode.com/posts', true);
+          xhttp.send();
+        }
+  </script>
+</body>
+</html>
